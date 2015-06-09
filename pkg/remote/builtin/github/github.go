@@ -322,12 +322,12 @@ func (g *GitHub) pullRequest(r *http.Request) (*common.Hook, error) {
 	c := &common.Commit{}
 	c.PullRequest = strconv.Itoa(*hook.PullRequest.Number)
 	c.Message = *hook.PullRequest.Title
-	c.Sha = *hook.PullRequest.Base.SHA
-	c.Ref = *hook.PullRequest.Base.Ref
+	c.Sha = *hook.PullRequest.Head.SHA
+	c.Ref = *hook.PullRequest.Head.Ref
 	c.Ref = fmt.Sprintf("refs/pull/%s/merge", c.PullRequest)
-	c.Branch = *hook.PullRequest.Base.Ref
+	c.Branch = *hook.PullRequest.Head.Ref
 	c.Timestamp = time.Now().UTC().Format("2006-01-02 15:04:05.000000000 +0000 MST")
-	c.Author = *hook.PullRequest.Base.User.Login
+	c.Author = *hook.PullRequest.Head.User.Login
 	c.SourceRemote = *hook.PullRequest.Head.Repo.CloneURL
 	c.SourceBranch = *hook.PullRequest.Head.Ref
 	c.SourceSha = *hook.PullRequest.Head.SHA
